@@ -38,7 +38,7 @@ BX.BitrixVue.createApp({
             <th>Ответственный</th>
             <th>Постановщик</th>
             <th>Приоритет</th>
-        <tbody>
+        <tbody class="ui-sortable">
         <tr v-for="(item, index) in items">
             <td> {{item.ID}} </td>
             <td> {{item.TITLE}} </td>
@@ -46,9 +46,16 @@ BX.BitrixVue.createApp({
             <td> {{item.RESPONSIBLE_ID}} </td>
             <td> {{item.CREATED_BY}} </td>
             <td>
-                <p><button @click="item.UF_PRIORITY--, counter(item.ID, item.UF_PRIORITY)">-</button>{{item.UF_PRIORITY}}
-                <button v-on:click="item.UF_PRIORITY++, counter(item.ID, item.UF_PRIORITY)">+</button>
+                <p><button class="btn" @click="item.UF_PRIORITY--, counter(item.ID, item.UF_PRIORITY)">-</button>
+                <span data-name="sort">{{item.UF_PRIORITY}}</span>
+                <button class="btn" v-on:click="item.UF_PRIORITY++, counter(item.ID, item.UF_PRIORITY)">+</button>
             </td/>`}).mount('#application');
+
+$('.btn').click(function() {
+    $('.ui-sortable tr').sort(function(a, b) {
+        return +$(b).find('[data-name=sort]').text() - +$(a).find('[data-name=sort]').text();
+    }).appendTo('.ui-sortable');
+});
 
 </script>
 
